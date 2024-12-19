@@ -130,7 +130,7 @@ namespace DynaPlex::Models {
 					next_expected_discard = FindDiscarded3(state.remaining_weight_vector[i] - state.UpcomingComponentWeight);
 				}
 				else { // cannot fit
-					next_expected_discard = FindDiscarded3(mdp->new_material_capacity - state.UpcomingComponentWeight); //+ state.remaining_weight_vector[i]
+                    next_expected_discard = FindDiscarded3(mdp->new_material_capacity - state.UpcomingComponentWeight) + state.remaining_weight_vector[i];
 				}
 				
 
