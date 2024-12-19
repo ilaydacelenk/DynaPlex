@@ -5,9 +5,8 @@
  * - Providing MDP configuration files is not required, but serves as documentation. 
  * - It also simplifies unit_tests, see tests/mdp_unit_tests/*.cpp. 
  */
-
 {
-  "id": "empty_example",
-  "discount_factor": 1.0
-  //other variables that are read by the constructor go here
+  "id": "airplane",
+  "InitialDays": 25,
+  "InitialSeats": 12
 }

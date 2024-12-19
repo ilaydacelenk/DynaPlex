@@ -27,8 +27,8 @@ namespace DynaPlex::Models {
 			}
 
 			double cost = c * action;
-			auto inv = state.state_vector.back() + action;
-			state.state_vector.push_back(inv);
+			auto inv = state.state_vector.back() + action; // adds action to the last element
+			state.state_vector.push_back(inv); // adds new element
 			state.cat = StateCategory::AwaitEvent();
 
 			return cost;

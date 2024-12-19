@@ -10,7 +10,6 @@ namespace DynaPlex::Models {
 	{		
 		class MDP
 		{			
-			
 			double discount_factor;
 			int64_t max_bin_size;
 			int64_t number_of_bins;

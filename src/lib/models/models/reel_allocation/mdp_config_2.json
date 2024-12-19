@@ -5,9 +5,17 @@
  * - Providing MDP configuration files is not required, but serves as documentation. 
  * - It also simplifies unit_tests, see tests/mdp_unit_tests/*.cpp. 
  */
-
 {
-  "id": "empty_example",
-  "discount_factor": 1.0
-  //other variables that are read by the constructor go here
+  "id": "reel_allocation",
+  "number_of_slots": 2,
+  "new_material_capacity": 5000,
+  "discount_factor": 1.0,
+  "WeightOfCompPerType": [ 820, 792, 192 ],
+  "probabilities": [ 0.61, 0.21, 0.18 ],
+  "comp_dist": {
+    "type": "custom",
+    "probs": [ 0.61, 0.21, 0.18 ] //probability distribution 0 (w. prob 0.9), 1 (w. prob 0.05), 2 (w. prob 0.05).
+  }
 }
+			
+
