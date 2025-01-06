@@ -94,6 +94,11 @@ namespace DynaPlex::Models {
                 // Increment iteration counter
                 t += 1;
             }
+            double min_f_t = *std::min_element(f_t_now.begin(), f_t_now.end());
+            // Subtract min_f_t from each element of f_t_prev, relative f
+            for (size_t i = 0; i < f_t_prev.size(); ++i) {
+                f_t_now[i] = f_t_prev[i] - min_f_t;
+            }
 
             // Print the final iteration count
             std::cout << "Final t value: " << t - 1 << std::endl;
@@ -101,13 +106,8 @@ namespace DynaPlex::Models {
 
         double IndexPolicyDiscarded3::FindDiscarded3(int64_t v) const {
             auto it = std::find(W.begin(), W.end(), v);
-            if (it != W.end()) {
-                size_t idx = std::distance(W.begin(), it);
-                return f_t_now[idx];
-            }
-            else {
-                throw std::invalid_argument("Value not found in W.");
-            }
+            size_t idx = std::distance(W.begin(), it);
+            return f_t_now[idx];
         }
 
 		int64_t IndexPolicyDiscarded3::GetAction(const MDP::State& state) const
