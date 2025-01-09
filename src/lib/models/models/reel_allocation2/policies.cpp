@@ -39,47 +39,51 @@ namespace DynaPlex::Models {
 
             // Initialization
             f_t_now.resize(W.size(), 0.0); // Initialize f_t_now with zeros
-            std::vector<double> f_t_prev(W.size(), 0.0); // Vector for previous f_t
-            const double threshold = 0.01; // Stopping condition
-            double max_min_diff = 500.0; // Initial difference
+            std::vector<double> f_t_prev(W.size(), 0.0); // Initialize vector for previous f_t for t=0
+            const double epsilon = 0.0001; // Stopping condition
+            double m_t = 0.0; // Initialize min difference
+            double M_t = 5000.0; // Initialize max difference
             int t = 0;
 
-            while (max_min_diff > threshold) {
+            while ( M_t - m_t > epsilon * m_t ) { //(M_t - m_t > epsilon * m_t) && (t < 10)
+                // Increment iteration counter
+                t += 1;
+
                 // Calculate f_t_now for all values in W
                 for (size_t j = 0; j < W.size(); ++j) {
                     int64_t w = W[j];
-                    double x_value = 0.0;
+                    double f_value = 0.0;
 
                     for (size_t i = 0; i < order_weights.size(); ++i) {
                         int64_t x = order_weights[i];
                         if (w >= x) {
                             // Find index for w - x
                             size_t idx = static_cast<size_t>(w - x);
-                            x_value += order_probabilities[i] * f_t_prev[idx];
+                            f_value += order_probabilities[i] * f_t_prev[idx];
                         }
                         else {
                             // Find index for target - x
                             size_t idx = static_cast<size_t>(target - x);
-                            x_value += order_probabilities[i] * (f_t_prev[idx] + static_cast<double>(w));
+                            f_value += order_probabilities[i] * (f_t_prev[idx] + static_cast<double>(w));
                         }
                     }
 
-                    f_t_now[j] = x_value; // Update current value
+                    f_t_now[j] = f_value; // Update current value
                 }
 
                 // Compute the difference vector
                 std::vector<double> diff(W.size());
                 for (size_t j = 0; j < W.size(); ++j) {
                     diff[j] = f_t_now[j] - f_t_prev[j];
-                }
+                };
 
                 // Compute max_min_diff
-                double max_diff = *std::max_element(diff.begin(), diff.end());
-                double min_diff = *std::min_element(diff.begin(), diff.end());
-                max_min_diff = max_diff - min_diff;
+                M_t = *std::max_element(diff.begin(), diff.end());
+                m_t = *std::min_element(diff.begin(), diff.end());
+                //max_min_diff = max_diff - min_diff;
 
                 // Print max_min_diff at each iteration
-                std::cout << "Iteration " << t << ", max_min_diff: " << max_min_diff << std::endl;
+                std::cout << "Iteration " << t << ", max_min_diff: " << M_t - m_t << std::endl;
                 
                 // Print f_t_prev values
                 //std::cout << "f_t_prev values at iteration " << t << ": ";
@@ -88,11 +92,10 @@ namespace DynaPlex::Models {
                 //}
                 //std::cout << std::endl;
 
-                // Update f_t_prev with f_t_now
-                f_t_prev = f_t_now;
+                
+                f_t_prev = f_t_now; // Update f_t_prev with f_t_now
 
-                // Increment iteration counter
-                t += 1;
+                
             }
             double min_f_t = *std::min_element(f_t_now.begin(), f_t_now.end());
             // Subtract min_f_t from each element of f_t_prev, relative f
@@ -101,7 +104,7 @@ namespace DynaPlex::Models {
             }
 
             // Print the final iteration count
-            std::cout << "Final t value: " << t - 1 << std::endl;
+            std::cout << "Final t value: " << t << std::endl;
         }
 
         double IndexPolicyDiscarded3::FindDiscarded3(int64_t v) const {
