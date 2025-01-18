@@ -1,11 +1,11 @@
-#include "dynaplex/models/reel_allocation2/mdp.h" //#include "mdp.h"
+#include "dynaplex/models/reel_allocation2_arrival/mdp.h" //#include "mdp.h"
 #include "dynaplex/erasure/mdpregistrar.h"
 #include "policies.h"
 #include <algorithm> // For std::sort
 
 
 namespace DynaPlex::Models {
-	namespace reel_allocation2 /*keep this in line with id below and with namespace name in header*/
+	namespace reel_allocation2_arrival /*keep this in line with id below and with namespace name in header*/
 	{
 		DynaPlex::VarGroup MDP::State::ToVarGroup() const
 		{
@@ -13,7 +13,7 @@ namespace DynaPlex::Models {
 			DynaPlex::VarGroup vars;
 			vars.Add("cat", cat);
 			vars.Add("remaining_weight_vector", remaining_weight_vector);
-			vars.Add("UpcomingComponentWeight", UpcomingComponentWeight);
+			vars.Add("UpcomingComponentWeights", UpcomingComponentWeights);
 
 			return vars;
 		}
@@ -23,7 +23,7 @@ namespace DynaPlex::Models {
 			State state{};
 			vars.Get("cat", state.cat);
 			vars.Get("remaining_weight_vector", state.remaining_weight_vector);
-			vars.Get("UpcomingComponentWeight", state.UpcomingComponentWeight);
+			vars.Get("UpcomingComponentWeights", state.UpcomingComponentWeights);
 			return state;
 		}
 
@@ -47,6 +47,7 @@ namespace DynaPlex::Models {
 		{
 			config.Get("new_material_capacity", new_material_capacity);
 			config.Get("number_of_slots", number_of_slots);
+			config.Get("arrival_size", arrival_size);
 			config.Get("WeightOfCompPerType", WeightOfCompPerType);
 			config.Get("comp_dist", comp_dist);
 			config.Get("probabilities", probabilities);
@@ -63,7 +64,7 @@ namespace DynaPlex::Models {
 			State state{};
 			state.cat = StateCategory::AwaitEvent();//or AwaitAction(), depending on logic
 			//initiate other variables.
-			state.UpcomingComponentWeight = 0;
+			state.UpcomingComponentWeights = std::vector<int64_t>(arrival_size, 0);
 			state.remaining_weight_vector = std::vector<int64_t>(number_of_slots, 0); 
 			return state;
 		}
@@ -80,7 +81,11 @@ namespace DynaPlex::Models {
 		{
 			//after processing this event, we await an action.
 			state.cat = StateCategory::AwaitAction();
-			state.UpcomingComponentWeight = event.UpcomingComponentWeight;
+			for (size_t i = 0; i < arrival_size; ++i) {
+				if (state.UpcomingComponentWeights[i] == 0) {
+					state.UpcomingComponentWeights[i] = event.UpcomingComponentWeight;
+				}
+			};
 			return 0.0;//we only have costs after an action
 		}
 
@@ -89,19 +94,19 @@ namespace DynaPlex::Models {
 	
 			state.cat = StateCategory::AwaitEvent();//after processing this action, we await an event.
 		
-			int64_t diff = state.remaining_weight_vector[action] - state.UpcomingComponentWeight;
+			int64_t diff = state.remaining_weight_vector[action] - state.UpcomingComponentWeights[0];
 
 			if (diff >= 0)//it can fit
 			{
-				state.remaining_weight_vector[action] -= state.UpcomingComponentWeight; // reduce the material weight by component weight
+				state.remaining_weight_vector[action] -= state.UpcomingComponentWeights[0]; // reduce the material weight by component weight
 				std::sort(state.remaining_weight_vector.begin(), state.remaining_weight_vector.end()); //sorting
 				return 0.0;
 			}
 			else//cannot fit
 			{
-				state.remaining_weight_vector[action] = new_material_capacity - state.UpcomingComponentWeight; // use a new material
+				state.remaining_weight_vector[action] = new_material_capacity - state.UpcomingComponentWeights[0]; // use a new material
 				std::sort(state.remaining_weight_vector.begin(), state.remaining_weight_vector.end()); //sorting
-				return diff + state.UpcomingComponentWeight; //discard the previous material, ie previous state.remaining_weight_vector[action]
+				return diff + state.UpcomingComponentWeights[0]; //discard the previous material, ie previous state.remaining_weight_vector[action]
 			}
 			
 		}
@@ -115,7 +120,7 @@ namespace DynaPlex::Models {
 			//state features as supplied to learning algorithms:
 			
 			
-			features.Add(1.0*state.UpcomingComponentWeight / new_material_capacity);
+			features.Add(1.0*state.UpcomingComponentWeights[0] / new_material_capacity);
 			
 			for (auto& weight : state.remaining_weight_vector)
 			{
@@ -124,17 +129,14 @@ namespace DynaPlex::Models {
 
 			for (auto& weight : state.remaining_weight_vector)
 			{
-				if (weight - state.UpcomingComponentWeight >= 0) { //if can fit
-					features.Add((weight - state.UpcomingComponentWeight) * 1.0 / new_material_capacity);
+				if (weight - state.UpcomingComponentWeights[0] >= 0) { //if can fit
+					features.Add((weight - state.UpcomingComponentWeights[0]) * 1.0 / new_material_capacity);
 				}
 				else { // cannot fit
-					features.Add((new_material_capacity - state.UpcomingComponentWeight) * 1.0 / new_material_capacity);
+					features.Add((new_material_capacity - state.UpcomingComponentWeights[0]) * 1.0 / new_material_capacity);
 				}
 				
 			}
-
-
-
 		}
 
 
@@ -166,13 +168,8 @@ namespace DynaPlex::Models {
 
 		void Register(DynaPlex::Registry& registry)
 		{
-			DynaPlex::Erasure::MDPRegistrar<MDP>::RegisterModel("reel_allocation2", "A simple example for material utilization with 2 active materials", registry);
-			//To use this MDP with dynaplex, register it like so, setting name equal to namespace and directory name
-			// and adding appropriate description. 
-			//DynaPlex::Erasure::MDPRegistrar<MDP>::RegisterModel(
-			//	"<id of mdp goes here, and should match namespace name and directory name>",
-			//	"<description goes here>",
-			//	registry); 
+			DynaPlex::Erasure::MDPRegistrar<MDP>::RegisterModel("reel_allocation2_arrival", "A model for material utilization with a # of active materials and a # of arrivals", registry);
+			
 		}
 	}
 }

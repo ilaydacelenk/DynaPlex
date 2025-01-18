@@ -27,6 +27,9 @@ namespace DynaPlex::Models {
 	namespace reel_allocation2 {
 		void Register(DynaPlex::Registry&);
 	}
+	namespace reel_allocation2_arrival {
+		void Register(DynaPlex::Registry&);
+	}
 
 	void RegistrationManager::RegisterAll(DynaPlex::Registry& registry) {
 		lost_sales::Register(registry);

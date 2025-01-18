@@ -16,5 +16,6 @@ add_subdirectory(ilayda_executable)
 add_subdirectory(airplane_mdp) # Added
 add_subdirectory(reel_allocation_mdp) # Added
 add_subdirectory(reel_allocation_mdp2) # Added
+add_subdirectory(reel_allocation_mdp2_arrival) # Added
 
 
