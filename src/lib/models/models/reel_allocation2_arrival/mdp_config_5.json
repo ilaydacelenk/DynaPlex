@@ -8,6 +8,7 @@
 {
   "id": "reel_allocation2",
   "number_of_slots": 5,
+  "arrival_size": 2,
   "new_material_capacity": 5000,
   "discount_factor": 1.0,
   "WeightOfCompPerType": [ 820, 792, 192 ],

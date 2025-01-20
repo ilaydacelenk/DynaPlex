@@ -31,7 +31,7 @@ namespace DynaPlex::Models {
 		VarGroup MDP::GetStaticInfo() const
 		{
 			VarGroup vars;
-			vars.Add("valid_actions", number_of_slots);
+			vars.Add("valid_actions", number_of_slots*arrival_size);
 			vars.Add("discount_factor", discount_factor);
 
 			//This indicates that the MDP never terminates. 
