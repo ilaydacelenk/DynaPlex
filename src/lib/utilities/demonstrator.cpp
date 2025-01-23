@@ -20,7 +20,7 @@ namespace DynaPlex :: Utilities{
 	Demonstrator::Demonstrator(const System& system,const VarGroup& config)
 		:system{system}
 	{
-		config.GetOrDefault("max_period_count", max_period_count, 3);
+		config.GetOrDefault("max_period_count", max_period_count, 5);
 		config.GetOrDefault("rng_seed", rng_seed, 11112014);
 		if (rng_seed < 0)
 			throw DynaPlex::Error("Demonstrator :: Invalid rng_seed - should be non-negative");		

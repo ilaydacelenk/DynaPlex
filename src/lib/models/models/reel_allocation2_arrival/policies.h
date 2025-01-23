@@ -5,6 +5,7 @@
 #include <memory>
 #include <unordered_map>
 #include <cstdint>
+#include <vector>
 
 namespace DynaPlex::Models {
 	namespace reel_allocation2_arrival /*must be consistent everywhere for complete mdp defininition and associated policies.*/

@@ -6,7 +6,7 @@
  * - It also simplifies unit_tests, see tests/mdp_unit_tests/*.cpp. 
  */
 {
-  "id": "reel_allocation2",
+  "id": "reel_allocation2_arrival",
   "number_of_slots": 5,
   "arrival_size": 2,
   "new_material_capacity": 5000,

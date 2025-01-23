@@ -24,7 +24,8 @@ int main() {
     //that is compatible with the first - same number of features, same number of valid actions:
     //DynaPlex::MDP different_mdp = dp.GetMDP(mdp_vars_from_json);
 
-    auto policy = mdp->GetPolicy("index_policy_discarded3");
+    //auto policy = mdp->GetPolicy("index_policy_discarded3");
+    auto policy = mdp->GetPolicy("random");
 
     DynaPlex::VarGroup nn_training{
         {"early_stopping_patience",15},

@@ -24,7 +24,8 @@ int main() {
     //that is compatible with the first - same number of features, same number of valid actions:
     //DynaPlex::MDP different_mdp = dp.GetMDP(mdp_vars_from_json);
 
-    auto policy = mdp->GetPolicy("index_policy_discarded3");
+    //auto policy = mdp->GetPolicy("index_policy_discarded3");
+    auto policy = mdp->GetPolicy("random");
 
     DynaPlex::VarGroup nn_training{
         {"early_stopping_patience",15},
@@ -77,7 +78,7 @@ int main() {
 
         //Compare the various trained policies:
         auto comparer = dp.GetPolicyComparer(mdp);
-        
+
         auto comparison = comparer.Compare(policies);
         //auto comparison = comparer.Compare(policy, mdp->GetPolicy("random"));
 
@@ -86,7 +87,7 @@ int main() {
             std::cout << VarGroup.Dump() << std::endl;
         }
 
-        
+
 
         //policies are automatically saved when training, but it may be usefull to save at custom location. 
         //To do so, we retrieve the policy, get a path where to save it, and thens ave it there/ 

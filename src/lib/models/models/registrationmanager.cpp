@@ -40,5 +40,6 @@ namespace DynaPlex::Models {
 		airplane::Register(registry);
 		reel_allocation::Register(registry);
 		reel_allocation2::Register(registry);
+		reel_allocation2_arrival::Register(registry);
 	}
 }

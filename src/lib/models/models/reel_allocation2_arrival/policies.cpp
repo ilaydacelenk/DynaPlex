@@ -122,9 +122,33 @@ namespace DynaPlex::Models {
 
 			//std::vector<int64_t> weights = mdp->WeightOfCompPerType;
 
-			double current_expected_discard;
-			double next_expected_discard;
-			std::vector<double> differences;
+            auto index = state.cat.Index();
+
+            std::vector<double> current_expected_discard_vector;
+            std::vector<double> next_expected_discard_vector;
+            //std::vector<double> differences_all; // std::vector<vector<double>> differences_all; error veriyor Matrix class ini kullanmayi dene
+
+            //DynaPlex::Matrix<double> differences_all;
+
+            double current_expected_discard;
+            double next_expected_discard;
+            std::vector<double> differences;
+
+            if (index == 0) { // if action is to select a component // index 0
+
+                // random reela assign etseydim change in expected discard nasil olurdu
+
+            }
+            else { // if action is to select a reel // index 1
+
+                // random component assign etseydim change in expected discard nasil olurdu
+
+            }
+
+
+
+            
+			
 			for (int i = 0; i < mdp->number_of_slots; i++)
 			{
 				current_expected_discard = FindDiscarded3(state.remaining_weight_vector[i]);

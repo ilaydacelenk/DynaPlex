@@ -1,6 +1,7 @@
 #pragma once
 #include "dynaplex/dynaplex_model_includes.h"
 #include "dynaplex/modelling/discretedist.h"
+#include <vector>
 
 namespace DynaPlex::Models {
 	namespace reel_allocation2_arrival /*must be consistent everywhere for complete mdp definition and associated policies and states (if not defined inline).*/
@@ -16,6 +17,7 @@ namespace DynaPlex::Models {
 			int64_t arrival_size;
 			std::vector<int64_t> WeightOfCompPerType;//used in policy
 			std::vector<double> probabilities;//the distribution of component types
+
 
 			struct State {
 				DynaPlex::StateCategory cat;

@@ -6,13 +6,14 @@
  * - It also simplifies unit_tests, see tests/mdp_unit_tests/*.cpp. 
  */
 {
-  "id": "reel_allocation2",
+  "id": "reel_allocation2_arrival",
   "number_of_slots": 2,
   "arrival_size": 2,
   "new_material_capacity": 5000,
   "discount_factor": 1.0,
   "WeightOfCompPerType": [ 820, 792, 192 ],
   "probabilities": [ 0.61, 0.21, 0.18 ],
+  "max_period_count":  5,
   "comp_dist": {
     "type": "custom",
     "probs": [ 0.61, 0.21, 0.18 ] //probability distribution 0 (w. prob 0.9), 1 (w. prob 0.05), 2 (w. prob 0.05).
