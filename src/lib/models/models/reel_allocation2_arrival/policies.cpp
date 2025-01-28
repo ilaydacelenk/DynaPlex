@@ -3,6 +3,7 @@
 #include "dynaplex/error.h"
 #include <algorithm>
 #include <vector>
+#include <deque>
 
 #include <iostream>
 #include <unordered_map>
@@ -126,9 +127,8 @@ namespace DynaPlex::Models {
 
             std::vector<double> current_expected_discard_vector;
             std::vector<double> next_expected_discard_vector;
-            //std::vector<double> differences_all; // std::vector<vector<double>> differences_all; error veriyor Matrix class ini kullanmayi dene
+            std::vector<std::vector<double>> differences_all; // error veriyor Matrix class ini kullanmayi dene
 
-            //DynaPlex::Matrix<double> differences_all;
 
             double current_expected_discard;
             double next_expected_discard;

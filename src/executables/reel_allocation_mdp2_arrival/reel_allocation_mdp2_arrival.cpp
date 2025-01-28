@@ -36,20 +36,20 @@ int main() {
 
     DynaPlex::VarGroup nn_architecture{
         {"type","mlp"},//mlp - multi-layer-perceptron. 
-        {"hidden_layers",DynaPlex::VarGroup::Int64Vec{512,256, 128}} // one hidden layer - make 128, 64 - 512,256, 128
+        {"hidden_layers",DynaPlex::VarGroup::Int64Vec{128, 64}} // one hidden layer - make 128, 64 - 512,256, 128
         //Note: Input/output layer sizes are determined by MDP. 
     };
     int64_t num_gens = 1;
 
     DynaPlex::VarGroup dcl_config{
-        {"N",50000}, //number of samples, default 5000 - make 50000
+        {"N",5000}, //number of samples, default 5000 - make 50000
         {"num_gens",num_gens}, //number of neural network generations.
-        {"M",1000}, //rollouts per action, default 1000. - make 300 - 1000
+        {"M",300}, //rollouts per action, default 1000. - make 300 - 1000
         {"nn_architecture",nn_architecture},
         {"nn_training",nn_training},
         {"retrain_lastgen_only",false},
         {"H",25}, //depth of the rollouts (horizon length) default 40 - make 40 - 25
-        {"L",300} //lenght of the warm-up period, default 100 - make 300
+        {"L",100} //lenght of the warm-up period, default 100 - make 300
     };
 
     try
