@@ -70,17 +70,26 @@ namespace DynaPlex::Models {
 
 		MDP::Event MDP::GetEvent(RNG& rng) const {
 			//generate an event using the custom discrete distribution (see MDP() initializer)
-			int64_t compType = comp_dist.GetSample(rng);
-			int64_t weight = WeightOfCompPerType.at(compType);
-			return Event(weight);//return the weight of the component type
+			//int64_t compType = comp_dist.GetSample(rng);
+			//int64_t weight = WeightOfCompPerType.at(compType);
+			// event is the type of component
+			return comp_dist.GetSample(rng);//return the weight of the component type
 		}
 
+		std::vector<std::tuple<MDP::Event, double>> MDP::EventProbabilities() const
+		{
+			return comp_dist.QuantityProbabilities();
+			//This is optional to implement. You only need to implement it if you intend to solve versions of your problem
+			//using exact methods that need access to the exact event probabilities.
+			//Note that this is typically only feasible if the state space if finite and not too big, i.e. at most a few million states.
+			throw DynaPlex::NotImplementedError();
+		}
 
 		double MDP::ModifyStateWithEvent(State& state, const Event& event) const
 		{
 			//after processing this event, we await an action.
 			state.cat = StateCategory::AwaitAction();
-			state.UpcomingComponentWeight = event.UpcomingComponentWeight;
+			state.UpcomingComponentWeight = WeightOfCompPerType[event];
 			return 0.0;//we only have costs after an action
 		}
 
@@ -140,13 +149,7 @@ namespace DynaPlex::Models {
 
 
 
-		std::vector<std::tuple<MDP::Event, double>> MDP::EventProbabilities() const
-		{
-			//This is optional to implement. You only need to implement it if you intend to solve versions of your problem
-			//using exact methods that need access to the exact event probabilities.
-			//Note that this is typically only feasible if the state space if finite and not too big, i.e. at most a few million states.
-			throw DynaPlex::NotImplementedError();
-		}
+
 
 
 		

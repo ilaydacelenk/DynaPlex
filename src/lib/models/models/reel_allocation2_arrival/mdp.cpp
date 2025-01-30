@@ -24,6 +24,7 @@ namespace DynaPlex::Models {
 			vars.Get("cat", state.cat);
 			vars.Get("remaining_weight_vector", state.remaining_weight_vector);
 			vars.Get("UpcomingComponentWeights", state.UpcomingComponentWeights);
+			
 			return state;
 		}
 
@@ -107,9 +108,10 @@ namespace DynaPlex::Models {
 
 				state.cat = StateCategory::AwaitAction(1);//after processing this action, we await a reel selection action.
 
-				std::sort(state.UpcomingComponentWeights.begin(), state.UpcomingComponentWeights.end()); //sorting
+				//std::sort(state.UpcomingComponentWeights.begin(), state.UpcomingComponentWeights.end()); //sorting
 				std::swap(state.UpcomingComponentWeights[0], state.UpcomingComponentWeights[action]); // put the component with action index to the first loc
 
+				return 0.0;
 			}
 			else { // if action is to select a reel // index 1
 				state.cat = StateCategory::AwaitEvent();//after processing this action, we await an event.
@@ -151,7 +153,8 @@ namespace DynaPlex::Models {
 				features.Add(weight * 1.0 / new_material_capacity);
 			}
 
-			
+			auto index = state.cat.Index();
+			features.Add(index); //binary
 		}
 
 

@@ -125,50 +125,67 @@ namespace DynaPlex::Models {
 
             auto index = state.cat.Index();
 
-            std::vector<double> current_expected_discard_vector;
-            std::vector<double> next_expected_discard_vector;
-            std::vector<std::vector<double>> differences_all; // error veriyor Matrix class ini kullanmayi dene
+                   
+            //std::vector<std::vector<double>> differences_all; 
 
-
+            std::vector<double> min_differences;
             double current_expected_discard;
             double next_expected_discard;
             std::vector<double> differences;
 
             if (index == 0) { // if action is to select a component // index 0
+                
+                for (int j = 0; j < mdp->arrival_size; j++) {
 
-                // random reela assign etseydim change in expected discard nasil olurdu
+                    differences.clear();
+                    for (int i = 0; i < mdp->number_of_slots; i++)
+                    {
+                        current_expected_discard = FindDiscarded3(state.remaining_weight_vector[i]);
 
+                        if (state.remaining_weight_vector[i] - state.UpcomingComponentWeights[j] >= 0) { // can fit
+                            next_expected_discard = FindDiscarded3(state.remaining_weight_vector[i] - state.UpcomingComponentWeights[j]);
+                        }
+                        else { // cannot fit
+                            next_expected_discard = FindDiscarded3(mdp->new_material_capacity - state.UpcomingComponentWeights[j]) + state.remaining_weight_vector[i];
+                        }
+
+                        differences.push_back(next_expected_discard - current_expected_discard); // expected discard for all reels for specific comp
+                        
+                    };
+                    min_differences.push_back(*std::min_element(differences.begin(), differences.end()));
+                    
+                }
+
+                auto minElementIt = std::min_element(min_differences.begin(), min_differences.end()); // smallest discard for each comp
+                int64_t act = std::distance(min_differences.begin(), minElementIt); // index of comp with smallest expected discard
+                
+                return act;
             }
             else { // if action is to select a reel // index 1
 
+                differences.clear();
                 // random component assign etseydim change in expected discard nasil olurdu
+                for (int i = 0; i < mdp->number_of_slots; i++)
+                {
+                    current_expected_discard = FindDiscarded3(state.remaining_weight_vector[i]);
 
+                    if (state.remaining_weight_vector[i] - state.UpcomingComponentWeights[0] >= 0) { // can fit
+                        next_expected_discard = FindDiscarded3(state.remaining_weight_vector[i] - state.UpcomingComponentWeights[0]);
+                    }
+                    else { // cannot fit
+                        next_expected_discard = FindDiscarded3(mdp->new_material_capacity - state.UpcomingComponentWeights[0]) + state.remaining_weight_vector[i];
+                    }
+
+                    differences.push_back(next_expected_discard - current_expected_discard); // expected discard for all indices, we prefer the most negative 
+
+                }
+                auto minElementIt = std::min_element(differences.begin(), differences.end()); // smallest discard
+                int64_t act = std::distance(differences.begin(), minElementIt) + mdp->arrival_size; // index with smallest expected discard
+
+                return act;
             }
 
-
-
-            
 			
-			for (int i = 0; i < mdp->number_of_slots; i++)
-			{
-				current_expected_discard = FindDiscarded3(state.remaining_weight_vector[i]);
-
-				if (state.remaining_weight_vector[i] - state.UpcomingComponentWeights[0] >= 0) { // can fit
-					next_expected_discard = FindDiscarded3(state.remaining_weight_vector[i] - state.UpcomingComponentWeights[0]);
-				}
-				else { // cannot fit
-                    next_expected_discard = FindDiscarded3(mdp->new_material_capacity - state.UpcomingComponentWeights[0]) + state.remaining_weight_vector[i];
-				}
-				
-
-				differences.push_back(next_expected_discard - current_expected_discard); // expected discard for all indices, we prefer the most negative 
-
-			}
-
-			auto minElementIt = std::min_element(differences.begin(), differences.end()); // smallest discard
-			int64_t act = std::distance(differences.begin(), minElementIt); // index with smallest expected discard
-
-			return act;
 		}
 
 	}

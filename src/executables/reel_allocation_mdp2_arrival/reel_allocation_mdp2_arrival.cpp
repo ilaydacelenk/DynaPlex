@@ -36,7 +36,7 @@ int main() {
 
     DynaPlex::VarGroup nn_architecture{
         {"type","mlp"},//mlp - multi-layer-perceptron. 
-        {"hidden_layers",DynaPlex::VarGroup::Int64Vec{128, 64}} // one hidden layer - make 128, 64 - 512,256, 128
+        {"hidden_layers",DynaPlex::VarGroup::Int64Vec{64, 64}} // one hidden layer - 128, 64 - make 512,256, 128
         //Note: Input/output layer sizes are determined by MDP. 
     };
     int64_t num_gens = 1;
@@ -55,12 +55,12 @@ int main() {
     try
     {
         // added by willem 
-        //auto dem = dp.GetDemonstrator();
-        //auto trace = dem.GetTrace(mdp);
-        //for (auto& thing : trace)
-        //{
-        //    std::cout << thing.Dump() << std::endl;
-        //}
+        auto dem = dp.GetDemonstrator();
+        auto trace = dem.GetTrace(mdp);
+        for (auto& thing : trace)
+        {
+            std::cout << thing.Dump() << std::endl;
+        }
         //return 0;
 
         //Create a trainer for the mdp, with appropriate configuratoin. 
@@ -88,27 +88,6 @@ int main() {
         }
 
 
-
-        //policies are automatically saved when training, but it may be usefull to save at custom location. 
-        //To do so, we retrieve the policy, get a path where to save it, and thens ave it there/ 
-        auto last_policy = dcl.GetPolicy();
-        //gets a file_path without file extension (file extensions are automatically added when saving): 
-        auto path = dp.System().filepath("dcl", "reel_allocation_mdp2_arrival", "reel_allocation_policy_gen" + std::to_string(num_gens));
-        //saves two files, one .json file with the architecture (e.g. trained_lost_sales_policy.json), and another file with neural network weights (.pth):		
-        dp.SavePolicy(last_policy, path);
-
-        for (auto& VarGroup : comparer.Compare(policy, mdp->GetPolicy("random")))
-        {
-            std::cout << VarGroup.Dump() << std::endl;
-        }
-
-        //This loads the policy again from the same path, automatically adding the right extensions:
-        //auto policy = dp.LoadPolicy(mdp, path);
-
-        //It is possible to load the policy trained for one MDP, and make it applicable to another mdp:
-        //this however only works if the two policies have consistent input and output dimensions, i.e.
-        //same number of valid actions and same number of features. 
-        //auto different_policy = dp.LoadPolicy(different_mdp, path);
 
 
 
