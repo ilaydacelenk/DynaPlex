@@ -16,7 +16,7 @@ else(dynaplex_enable_pythonbindings)
    add_library (DP_${targetname} STATIC)
    add_library (DynaPlex::${targetname} ALIAS DP_${targetname})
    set_target_properties(DP_${targetname} PROPERTIES OUTPUT_NAME DynaPlex_${targetname} EXPORT_NAME ${targetname})
-   target_sources(DP_${targetname} PUBLIC ${headers} PRIVATE ${sources} "models/reel_allocation/policies.cpp" "models/reel_allocation/policies.h" )
+   target_sources(DP_${targetname} PUBLIC ${headers} PRIVATE ${sources})
    target_include_directories(DP_${targetname} PUBLIC $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> )
    target_link_libraries(DP_${targetname} PUBLIC DynaPlex::Core Boost::math)
    if(dynaplex_all_warnings)
@@ -61,4 +61,3 @@ else(dynaplex_enable_pythonbindings)
 
     
 endif(dynaplex_enable_pythonbindings) 
-

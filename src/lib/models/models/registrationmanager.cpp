@@ -15,13 +15,7 @@ namespace DynaPlex::Models {
 	namespace perishable_systems {
 		void Register(DynaPlex::Registry&);
 	}
-	namespace ilayda {
-		void Register(DynaPlex::Registry&);
-	}
 	namespace airplane {
-		void Register(DynaPlex::Registry&);
-	}
-	namespace reel_allocation {
 		void Register(DynaPlex::Registry&);
 	}
 	namespace reel_allocation2 {
@@ -36,9 +30,7 @@ namespace DynaPlex::Models {
 		bin_packing::Register(registry);
 		order_picking::Register(registry);
 		perishable_systems::Register(registry);
-		ilayda::Register(registry);
 		airplane::Register(registry);
-		reel_allocation::Register(registry);
 		reel_allocation2::Register(registry);
 		reel_allocation2_arrival::Register(registry);
 	}
