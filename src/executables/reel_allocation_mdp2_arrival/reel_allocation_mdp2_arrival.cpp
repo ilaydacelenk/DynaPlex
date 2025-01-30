@@ -24,8 +24,8 @@ int main() {
     //that is compatible with the first - same number of features, same number of valid actions:
     //DynaPlex::MDP different_mdp = dp.GetMDP(mdp_vars_from_json);
 
-    //auto policy = mdp->GetPolicy("index_policy_discarded3");
-    auto policy = mdp->GetPolicy("random");
+    auto policy = mdp->GetPolicy("index_policy_discarded3");
+    //auto policy = mdp->GetPolicy("random");
 
     DynaPlex::VarGroup nn_training{
         {"early_stopping_patience",15},
@@ -36,31 +36,31 @@ int main() {
 
     DynaPlex::VarGroup nn_architecture{
         {"type","mlp"},//mlp - multi-layer-perceptron. 
-        {"hidden_layers",DynaPlex::VarGroup::Int64Vec{64, 64}} // one hidden layer - 128, 64 - make 512,256, 128
+        {"hidden_layers",DynaPlex::VarGroup::Int64Vec{512,256, 128}} // one hidden layer - 128, 64 - make 512,256, 128
         //Note: Input/output layer sizes are determined by MDP. 
     };
     int64_t num_gens = 1;
 
     DynaPlex::VarGroup dcl_config{
-        {"N",5000}, //number of samples, default 5000 - make 50000
+        {"N",50000}, //number of samples, default 5000 - make 50000
         {"num_gens",num_gens}, //number of neural network generations.
         {"M",300}, //rollouts per action, default 1000. - make 300 - 1000
         {"nn_architecture",nn_architecture},
         {"nn_training",nn_training},
         {"retrain_lastgen_only",false},
-        {"H",25}, //depth of the rollouts (horizon length) default 40 - make 40 - 25
-        {"L",100} //lenght of the warm-up period, default 100 - make 300
+        {"H",25}, //depth of the rollouts (horizon length) default 40 - make 25
+        {"L",300} //lenght of the warm-up period, default 100 - make 300
     };
 
     try
     {
         // added by willem 
-        auto dem = dp.GetDemonstrator();
-        auto trace = dem.GetTrace(mdp);
-        for (auto& thing : trace)
-        {
-            std::cout << thing.Dump() << std::endl;
-        }
+        //auto dem = dp.GetDemonstrator();
+        //auto trace = dem.GetTrace(mdp);
+        //for (auto& thing : trace)
+        //{
+        //    std::cout << thing.Dump() << std::endl;
+        //}
         //return 0;
 
         //Create a trainer for the mdp, with appropriate configuratoin. 

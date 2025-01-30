@@ -26,9 +26,7 @@ namespace DynaPlex::Models {
 				//Defaulting this does not always work. It can be removed as only the exact solver would benefit from this.
 				bool operator==(const State& other) const = default;
 			};
-		//	struct Event {
-		//		int64_t UpcomingComponentWeight;
-		//	};
+
 			using Event = int64_t;
 
 			double ModifyStateWithAction(State&, int64_t action) const;

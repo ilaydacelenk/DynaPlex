@@ -68,9 +68,9 @@ namespace DynaPlex::Models {
 
 		MDP::Event MDP::GetEvent(RNG& rng) const {
 			//generate an event using the custom discrete distribution (see MDP() initializer)
-			int64_t compType = comp_dist.GetSample(rng);
-			int64_t weight = WeightOfCompPerType.at(compType);
-			return Event(weight);//return the weight of the component type
+			//int64_t compType = comp_dist.GetSample(rng);
+			//int64_t weight = WeightOfCompPerType.at(compType);
+			return comp_dist.GetSample(rng);//return the weight of the component type
 		}
 
 
@@ -82,12 +82,12 @@ namespace DynaPlex::Models {
 			// following is added for the initial state, we never see it later
 			for (size_t i = 0; i < arrival_size; ++i) {
 				if (state.UpcomingComponentWeights[i] == 0) {
-					state.UpcomingComponentWeights[i] = event.UpcomingComponentWeight;
+					state.UpcomingComponentWeights[i] = WeightOfCompPerType[event];
 				}
 			};
 
 			// only the first component will be updated as it was assigned in the prev action
-			state.UpcomingComponentWeights[0] = event.UpcomingComponentWeight; // new event ie component request
+			state.UpcomingComponentWeights[0] = WeightOfCompPerType[event]; // new event ie component request
 			
 
 			return 0.0;//we only have costs after an action
@@ -162,6 +162,7 @@ namespace DynaPlex::Models {
 
 		std::vector<std::tuple<MDP::Event, double>> MDP::EventProbabilities() const
 		{
+			return comp_dist.QuantityProbabilities();
 			//This is optional to implement. You only need to implement it if you intend to solve versions of your problem
 			//using exact methods that need access to the exact event probabilities.
 			//Note that this is typically only feasible if the state space if finite and not too big, i.e. at most a few million states.
