@@ -1,0 +1,20 @@
+/**
+ * MDP configuration file demonstrating a specific MDP configuration.  
+ * - Files under models/_subdir_/_filename_.json are copied to DYNAPLEX_IO_ROOT_DIR/IO_DynaPlex/mdp_config_examples/_subdir_/_filename_.json
+ *  where executable and mdp_unit_tests look for them. 
+ * - Providing MDP configuration files is not required, but serves as documentation. 
+ * - It also simplifies unit_tests, see tests/mdp_unit_tests/*.cpp. 
+ */
+
+{
+  "id": "driver_assignment",
+  "discount_factor": 1.0,
+  "number_drivers": 5,
+  "mean_order_per_time_unit": 5,
+  "max_x": 55,
+  "max_y": 6,
+  "max_working_hours": 780,
+  "horizon_length": 1440,
+  "cost_per_km": 15,
+  "penalty_for_workhour_violation": 50
+}

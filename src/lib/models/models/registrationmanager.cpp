@@ -24,6 +24,9 @@ namespace DynaPlex::Models {
 	namespace reel_allocation2_arrival {
 		void Register(DynaPlex::Registry&);
 	}
+	namespace driver_assignment {
+		void Register(DynaPlex::Registry&);
+	}
 
 	void RegistrationManager::RegisterAll(DynaPlex::Registry& registry) {
 		lost_sales::Register(registry);
@@ -33,5 +36,6 @@ namespace DynaPlex::Models {
 		airplane::Register(registry);
 		reel_allocation2::Register(registry);
 		reel_allocation2_arrival::Register(registry);
+		driver_assignment::Register(registry);
 	}
 }
