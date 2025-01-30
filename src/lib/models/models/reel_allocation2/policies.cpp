@@ -83,7 +83,7 @@ namespace DynaPlex::Models {
                 //max_min_diff = max_diff - min_diff;
 
                 // Print max_min_diff at each iteration
-                std::cout << "Iteration " << t << ", max_min_diff: " << M_t - m_t << std::endl;
+                //std::cout << "Iteration " << t << ", max_min_diff: " << M_t - m_t << std::endl;
                 
                 // Print f_t_prev values
                 //std::cout << "f_t_prev values at iteration " << t << ": ";
@@ -104,7 +104,7 @@ namespace DynaPlex::Models {
             }
 
             // Print the final iteration count
-            std::cout << "Final t value: " << t << std::endl;
+            //std::cout << "Final t value: " << t << std::endl;
         }
 
         double IndexPolicyDiscarded3::FindDiscarded3(int64_t v) const {
