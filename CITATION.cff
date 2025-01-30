@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this software in your work, please cite it as below."
+authors:
+  - family-names: Akkerman
+    given-names: Fabian
+  - family-names: Begnardi
+    given-names: Luca
+  - family-names: Lo Bianco
+    given-names: Riccardo
+  - family-names: Temizoz
+    given-names: Tarkan
+  - family-names: Mes
+    given-names: Martijn
+  - family-names: van Jaarsveld
+    given-names: Willem
+title: "DynaPlex"
+repository-code: "https://github.com/DynaPlex/DynaPlex"
+url: "https://github.com/DynaPlex/DynaPlex"
+date-released: 2023-01-01
+preferred-citation:
+  type: software
+  authors:
+    - family-names: Akkerman
+      given-names: Fabian
+    - family-names: Begnardi
+      given-names: Luca
+    - family-names: Lo Bianco
+      given-names: Riccardo
+    - family-names: Temizoz
+      given-names: Tarkan
+    - family-names: Mes
+      given-names: Martijn
+    - family-names: van Jaarsveld
+      given-names: Willem
+  title: "DynaPlex"
+  year: 2023
+  month: 1
+  url: "https://github.com/DynaPlex/DynaPlex"
+  citation-key: "DynaPlex"
