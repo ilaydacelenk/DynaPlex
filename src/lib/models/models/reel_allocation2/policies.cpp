@@ -1,5 +1,6 @@
 #include "policies.h"
-#include "dynaplex/models/reel_allocation2/mdp.h" //#include "mdp.h" //
+#include "dynaplex/models/reel_allocation2/mdp.h" 
+
 #include "dynaplex/error.h"
 #include <algorithm>
 #include <vector>
