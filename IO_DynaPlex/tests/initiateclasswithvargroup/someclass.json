@@ -1,0 +1,1 @@
+{"myInt":42,"myNestedVector":[{"Size":1.0,"name":"1"},{"Size":4.0,"name":"2"}],"myQueue":[1,14],"myString":"string","myVector":[123,123],"nestedClass":{"Size":1.0,"name":"1"},"testEnumClass":3}
