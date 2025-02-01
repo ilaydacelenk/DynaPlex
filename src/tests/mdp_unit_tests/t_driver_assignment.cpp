@@ -9,7 +9,7 @@ namespace DynaPlex::Tests {
 		Tester tester{};
 		tester.ExecuteTest(model_name, config_name);
 	}
-	
+
 	TEST(driver_assignment, mdp_config_0_policy) {
 		std::string model_name = "driver_assignment"; // this should match the id and namespace name discussed earlier
 		std::string config_name = "mdp_config_0.json";

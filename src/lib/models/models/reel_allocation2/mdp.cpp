@@ -73,7 +73,7 @@ namespace DynaPlex::Models {
 			//int64_t compType = comp_dist.GetSample(rng);
 			//int64_t weight = WeightOfCompPerType.at(compType);
 			// event is the type of component
-			return comp_dist.GetSample(rng);//return the weight of the component type
+			return comp_dist.GetSample(rng);//return the type of the component 
 		}
 
 		std::vector<std::tuple<MDP::Event, double>> MDP::EventProbabilities() const
@@ -82,7 +82,6 @@ namespace DynaPlex::Models {
 			//This is optional to implement. You only need to implement it if you intend to solve versions of your problem
 			//using exact methods that need access to the exact event probabilities.
 			//Note that this is typically only feasible if the state space if finite and not too big, i.e. at most a few million states.
-			throw DynaPlex::NotImplementedError();
 		}
 
 		double MDP::ModifyStateWithEvent(State& state, const Event& event) const

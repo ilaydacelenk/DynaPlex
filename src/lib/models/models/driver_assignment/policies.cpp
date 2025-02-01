@@ -14,18 +14,17 @@ namespace DynaPlex::Models {
 
 		int64_t GreedyPolicy::GetAction(const MDP::State& state) const
 		{
-			double limit = std::numeric_limits<double>::infinity();
-			int64_t best_driver = 0;
+			
+			std::vector<double> distances;
 			for (int64_t i = 0; i < mdp->number_drivers; i++) {
 				double dist_x = std::abs(state.current_driver_list_conc[i * 5 + 1] - state.current_order_typelist[0]);
-				double dist_y = std::abs(state.current_driver_list_conc[i * 5 + 2] - state.current_order_typelist[1]);
-				double total_dist = dist_x + dist_y;
-				if (total_dist < limit) {
-					limit = total_dist;
-					best_driver = i;
-				}
+				double dist_y = std::abs(state.current_driver_list_conc[i * 5 + 2] - state.current_order_typelist[1]);	
+				distances.push_back(dist_x + dist_y);
 			}
-			return best_driver;
+			auto minDistance = std::min_element(distances.begin(), distances.end()); // smallest discard
+			int64_t best_driver_index = std::distance(distances.begin(), minDistance); // index with smallest expected discard
+			
+			return best_driver_index;
 		}
 	}
 }

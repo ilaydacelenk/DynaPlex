@@ -11,7 +11,6 @@
 #include <limits>
 #include <functional>
 
-
 namespace DynaPlex::Models {
 	namespace reel_allocation2_arrival /*keep this namespace name in line with the name space in which the mdp corresponding to this policy is defined*/
 	{

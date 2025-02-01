@@ -7,10 +7,10 @@ namespace DynaPlex::Models {
 	{		
 		class MDP
 		{
-			double discount_factor;
-			DynaPlex::DiscreteDist comp_dist;//the distribution of component types			
-
 		public:	
+			double discount_factor;
+			DynaPlex::DiscreteDist comp_dist;//the distribution of component types	
+
 			int64_t new_material_capacity; //previously defined above, but want to access it in policy so it needs to be public
 			int64_t number_of_slots; //previously defined above, but wanted to access it in policy so it needs to be public
 			std::vector<int64_t> WeightOfCompPerType;//used in policy

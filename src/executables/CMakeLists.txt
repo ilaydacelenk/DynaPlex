@@ -15,7 +15,7 @@ add_subdirectory(perishables_paper_results)
 add_subdirectory(airplane_mdp) # Added
 add_subdirectory(reel_allocation_mdp2) # Added
 add_subdirectory(reel_allocation_mdp2_arrival) # Added
-add_subdirectory(driver_assignment) # Added
+add_subdirectory(driver_assignment_mdp) # Added
 
 
 

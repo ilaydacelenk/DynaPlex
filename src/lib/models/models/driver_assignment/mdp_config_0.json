@@ -5,16 +5,15 @@
  * - Providing MDP configuration files is not required, but serves as documentation. 
  * - It also simplifies unit_tests, see tests/mdp_unit_tests/*.cpp. 
  */
-
 {
   "id": "driver_assignment",
   "discount_factor": 1.0,
   "number_drivers": 5,
-  "mean_order_per_time_unit": 5,
-  "max_x": 55,
-  "max_y": 6,
-  "max_working_hours": 780,
-  "horizon_length": 1440,
-  "cost_per_km": 15,
-  "penalty_for_workhour_violation": 50
+  "mean_order_per_time_unit": 5.0, 
+  "max_x": 55.0,
+  "max_y": 6.0,
+  "max_working_hours": 780.0, // 780 mins, 13 hrs
+  "horizon_length": 2880.0, // 1440 mins, 24 hrs
+  "cost_per_km": 15.0,
+  "penalty_for_workhour_violation": 50.0
 }
